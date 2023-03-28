@@ -1,19 +1,25 @@
 const express = require("express");
 const { routeProtector } = require("../controllers/authController");
 const {
-  getAllOrders,
-  deleteOrder,
-  createOrder,
-} = require("../controllers/orderController");
+  getAllCategories,
+  createCategory,
+  getCategory,
+  editCategory,
+  deleteCategory,
+} = require("../controllers/categoryController");
+const { uploadSingle } = require("../controllers/mediaController");
 
-const orderRoutes = express.Router();
+const categoryRoutes = express.Router();
 
-orderRoutes
+categoryRoutes
   .route("/")
-  .get(routeProtector, getAllOrders)
-  .delete(routeProtector, deleteOrder)
-  .post(createOrder);
+  .get(getAllCategories)
+  .post(uploadSingle, createCategory);
 
-orderRoutes.route("/:id").delete(routeProtector, deleteOrder);
+categoryRoutes
+  .route("/:id")
+  .get(getCategory)
+  .patch(uploadSingle, editCategory)
+  .delete(deleteCategory);
 
-module.exports = orderRoutes;
+module.exports = categoryRoutes;

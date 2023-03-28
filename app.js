@@ -1,14 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
-
-const userRoutes = require("./routers/userRouter");
+const adminRoutes = require("./routers/adminRouter");
+const categoryRoutes = require("./routers/categoryRouter");
 
 const app = express();
 
 app.use(express.json());
+app.use(express.static("."));
 app.use(morgan("dev"));
 
-app.use("/users", userRoutes);
+app.use("/api/v1/admins", adminRoutes);
+app.use("/api/v1/categories", categoryRoutes);
 
 module.exports = app;
 
@@ -25,5 +27,6 @@ module.exports = app;
 //   titleUz: string,
 //   descriptionRu: string,
 //   descriptionUz: string,
-//   about:string
+//   aboutUz:string
+//   aboutRu:string
 // };

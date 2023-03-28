@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const util = require("util");
+const Admin = require("../models/adminModel");
 
 const { sendSucces, sendError } = require("../utils/sendData");
 
@@ -16,8 +17,9 @@ exports.login = async (req, res) => {
     if (!username || !password) {
       return sendError(res, "Please provide both password and username", 404);
     }
+    const admin = await Admin.findOne({ username }).select("+password");
 
-    if (password !== "root" || username !== "root") {
+    if (!(await admin.comparePasswords(password))) {
       return sendError(res, "Wrong password or username", 404);
     }
 
