@@ -47,9 +47,6 @@ exports.createProduct = async (req, res) => {
       ...(images[0] ? { images } : {}),
     });
 
-    // images?.forEach((image) =>
-    //   fs.unlink("./img/" + image, (err) => err && err && console.log(err))
-    // );
     sendSucces(res, { product }, 200);
   } catch (error) {
     images?.forEach((image) =>

@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const adminRoutes = require("./routers/adminRouter");
+const articleRoutes = require("./routers/articleRouter");
 const categoryRoutes = require("./routers/categoryRouter");
 const productRoutes = require("./routers/productRouter");
 
@@ -13,6 +14,7 @@ app.use(morgan("dev"));
 app.use("/api/v1/admins", adminRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/articles", articleRoutes);
 
 module.exports = app;
 
