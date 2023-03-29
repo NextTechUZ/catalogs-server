@@ -1,0 +1,47 @@
+{
+     "openapi": "3.0.0",
+     "info": {
+          "title": "Example API",
+          "version": "1.0.0",
+          "description": "An example API for demonstration purposes."
+     },
+     "servers": [
+          {
+               "url": "http://localhost:3000"
+          }
+     ],
+     "paths": {
+          "/users": {
+               "get": {
+                    "summary": "Get a list of users",
+                    "description": "Returns a list of all users in the system.",
+                    "responses": {
+                         "200": {
+                              "description": "A list of users.",
+                              "content": {
+                                   "application/json": {
+                                        "schema": {
+                                             "type": "array",
+                                             "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                       "id": {
+                                                            "type": "string"
+                                                       },
+                                                       "name": {
+                                                            "type": "string"
+                                                       },
+                                                       "email": {
+                                                            "type": "string"
+                                                       }
+                                                  }
+                                             }
+                                        }
+                                   }
+                              }
+                         }
+                    }
+               }
+          }
+     }
+}

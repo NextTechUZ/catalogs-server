@@ -1,5 +1,5 @@
 const express = require("express");
-const { login } = require("../controllers/authController");
+const { login, routeProtector } = require("../controllers/authController");
 const {
   getAllAdmins,
   createAdmin,
@@ -12,7 +12,7 @@ const adminRoutes = express.Router();
 
 adminRoutes.route("/login").post(login);
 
-adminRoutes.route("/").get(getAllAdmins).post(createAdmin);
-adminRoutes.route("/:id").get(getAdmin).delete(deleteAdmin).patch(editAdmin);
+adminRoutes.route("/").get(routeProtector,getAllAdmins).post(routeProtector,createAdmin);
+adminRoutes.route("/:id").get(routeProtector,getAdmin).delete(routeProtector,deleteAdmin).patch(routeProtector,editAdmin);
 
 module.exports = adminRoutes;

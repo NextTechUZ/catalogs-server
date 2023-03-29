@@ -14,12 +14,12 @@ const categoryRoutes = express.Router();
 categoryRoutes
   .route("/")
   .get(getAllCategories)
-  .post(uploadSingle, createCategory);
+  .post(routeProtector, uploadSingle, createCategory);
 
 categoryRoutes
   .route("/:id")
   .get(getCategory)
-  .patch(uploadSingle, editCategory)
-  .delete(deleteCategory);
+  .patch(routeProtector, uploadSingle, editCategory)
+  .delete(routeProtector, deleteCategory);
 
 module.exports = categoryRoutes;

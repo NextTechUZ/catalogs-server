@@ -4,6 +4,7 @@ const adminRoutes = require("./routers/adminRouter");
 const articleRoutes = require("./routers/articleRouter");
 const categoryRoutes = require("./routers/categoryRouter");
 const productRoutes = require("./routers/productRouter");
+const swaggerRoutes = require("./routers/swaggerRoutes");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use("/api/v1/admins", adminRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/articles", articleRoutes);
+app.use("/", swaggerRoutes);
 
 module.exports = app;
 
