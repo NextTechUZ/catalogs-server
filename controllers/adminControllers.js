@@ -10,7 +10,8 @@ exports.getAllAdmins = async (req, res) => {
       .paginate()
       .limitFields();
 
-    sendSucces(res, { admins: await adminsQuery.query }, 200);
+    const admins = await adminsQuery.query;
+    sendSucces(res, { result: admins.length, admins }, 200);
   } catch (error) {
     sendError(res, error.message, 404);
   }

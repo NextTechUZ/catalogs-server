@@ -10,8 +10,8 @@ exports.getAllCategories = async (req, res) => {
       .filter()
       .paginate()
       .limitFields();
-
-    sendSucces(res, { categories: await categoryQuery.query }, 200);
+    const categories = await categoryQuery.query;
+    sendSucces(res, { result: categories.length, categories }, 200);
   } catch (error) {
     sendError(res, error.message, 404);
   }

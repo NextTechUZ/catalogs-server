@@ -1,19 +1,23 @@
 const express = require("express");
-const { routeProtector } = require("../controllers/authController");
+const { uploadMulti } = require("../controllers/mediaController");
+// const { createProduct } = require("../controllers/productController");
+
 const {
-  getAllOrders,
-  deleteOrder,
-  createOrder,
-} = require("../controllers/orderController");
+  getAllProducts,
+  createProduct,
+  getProduct,
+  deleteProduct,
+  editProduct,
+} = require("../controllers/productController");
 
-const orderRoutes = express.Router();
+const productRoutes = express.Router();
 
-orderRoutes
-  .route("/")
-  .get(routeProtector, getAllOrders)
-  .delete(routeProtector, deleteOrder)
-  .post(createOrder);
+productRoutes.route("/").get(getAllProducts).post(uploadMulti, createProduct);
 
-orderRoutes.route("/:id").delete(routeProtector, deleteOrder);
+productRoutes
+  .route("/:id")
+  .get(getProduct)
+  .delete(deleteProduct)
+  .patch(uploadMulti, editProduct);
 
-module.exports = orderRoutes;
+module.exports = productRoutes;
