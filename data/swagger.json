@@ -12,6 +12,10 @@
      ],
      "paths": {
           "/users": {
+               "post": {
+                    "summary": "Get a list of users",
+                    "description": "Returns a list of all users in the system."
+               },
                "get": {
                     "summary": "Get a list of users",
                     "description": "Returns a list of all users in the system.",

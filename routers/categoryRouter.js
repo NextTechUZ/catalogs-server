@@ -1,5 +1,5 @@
 const express = require("express");
-const { routeProtector } = require("../controllers/authController");
+const {} = require("../controllers/authController");
 const {
   getAllCategories,
   createCategory,
@@ -14,12 +14,12 @@ const categoryRoutes = express.Router();
 categoryRoutes
   .route("/")
   .get(getAllCategories)
-  .post(routeProtector, uploadSingle, createCategory);
+  .post(uploadSingle, createCategory);
 
 categoryRoutes
   .route("/:id")
   .get(getCategory)
-  .patch(routeProtector, uploadSingle, editCategory)
-  .delete(routeProtector, deleteCategory);
+  .patch(uploadSingle, editCategory)
+  .delete(deleteCategory);
 
 module.exports = categoryRoutes;

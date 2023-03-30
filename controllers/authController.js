@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
 
     const token = createToken(username, password);
 
-    sendSucces(res, { token }, 200);
+    sendSucces(res, { token, admin }, 200);
   } catch (error) {
     sendError(res, error.message, 404);
   }
@@ -44,13 +44,14 @@ exports.routeProtector = async (req, res, next) => {
     return sendError(res, "You are not logged in", 401);
   }
 
-  const decoded = await util.promisify(jwt.verify)(
+  const { username, password } = await util.promisify(jwt.verify)(
     token,
     process.env.JWT_SECRET
   );
-  const { username, password } = decoded;
 
-  if (password !== "root" || username !== "root") {
+  const admin = await Admin.findOne({ username }).select("+password");
+
+  if (!(await admin.comparePasswords(password))) {
     return sendError(res, "Wrong password or username", 404);
   }
 

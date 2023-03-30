@@ -40,9 +40,8 @@ exports.deleteCategory = async (req, res) => {
 
 exports.createCategory = async (req, res) => {
   try {
-    console.log(req.file);
     const image = req.file ? req.file.filename : undefined;
-    const category = await Category.create({ name: req.body.name, image });
+    const category = await Category.create({ ...req.body, image });
     sendSucces(res, { category }, 200);
   } catch (error) {
     req.file &&

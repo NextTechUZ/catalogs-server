@@ -1,12 +1,21 @@
 const { default: mongoose } = require("mongoose");
 
 const articleSchema = new mongoose.Schema({
-  title: {
+  titleUz: {
     type: String,
     required: [true, "Article title is required"],
     unique: [true, "Article title must be unique"],
   },
-  body: {
+  bodyUz: {
+    type: String,
+    required: [true, "Article body is required"],
+  },
+  titleRu: {
+    type: String,
+    required: [true, "Article title is required"],
+    unique: [true, "Article title must be unique"],
+  },
+  bodyRu: {
     type: String,
     required: [true, "Article body is required"],
   },

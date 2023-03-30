@@ -3,7 +3,7 @@ const fs = require("fs");
 const { sendError, sendSucces } = require("../utils/sendData");
 const Article = require("../models/articleModel");
 
-exports.getAllarticles = async (req, res) => {
+exports.getAllArticles = async (req, res) => {
   try {
     const articlesQuery = new APIFeatures(Article.find(), req.query)
       .sort()

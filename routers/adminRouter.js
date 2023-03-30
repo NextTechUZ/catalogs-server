@@ -12,7 +12,11 @@ const adminRoutes = express.Router();
 
 adminRoutes.route("/login").post(login);
 
-adminRoutes.route("/").get(routeProtector,getAllAdmins).post(routeProtector,createAdmin);
-adminRoutes.route("/:id").get(routeProtector,getAdmin).delete(routeProtector,deleteAdmin).patch(routeProtector,editAdmin);
+adminRoutes.route("/").get(routeProtector, getAllAdmins).post(createAdmin);
+adminRoutes
+  .route("/:id")
+  .get(routeProtector, getAdmin)
+  .delete(routeProtector, deleteAdmin)
+  .patch(routeProtector, editAdmin);
 
 module.exports = adminRoutes;
