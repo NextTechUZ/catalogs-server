@@ -38,7 +38,7 @@ exports.deleteProduct = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   const images = req.files.map((file) => file.filename);
-  try {
+   try {
     req.body.aboutRu = JSON.parse(req.body.aboutRu);
     req.body.aboutUz = JSON.parse(req.body.aboutUz);
 
