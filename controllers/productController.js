@@ -10,7 +10,9 @@ exports.getAllProducts = async (req, res) => {
       .filter()
       .paginate()
       .limitFields();
+
     const products = await productsQuery.query;
+
     sendSucces(res, { result: products.length, products }, 200);
   } catch (error) {
     sendError(res, error.message, 404);
@@ -37,46 +39,19 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.createProduct = async (req, res) => {
-  const images = req.files.map((file) => file.filename);
-   try {
-    req.body.aboutRu = JSON.parse(req.body.aboutRu);
-    req.body.aboutUz = JSON.parse(req.body.aboutUz);
-
-    const product = await Product.create({
-      ...req.body,
-      ...(images[0] ? { images } : {}),
-    });
+  try {
+    const product = await Product.create(req.body);
 
     sendSucces(res, { product }, 200);
   } catch (error) {
-    images?.forEach((image) =>
-      fs.unlink("./img/" + image, (err) => err && console.log(err))
-    );
     sendError(res, error.message, 404);
   }
 };
 exports.editProduct = async (req, res) => {
-  const images = req.files.map((file) => file.filename);
   try {
-    req.body.aboutRu = JSON.parse(req.body.aboutRu);
-    req.body.aboutUz = JSON.parse(req.body.aboutUz);
-
-    console.log(req.body, images);
-
-    const product = await Product.findByIdAndUpdate(req.params.id, {
-      ...req.body,
-      ...(images[0] ? { images } : {}),
-    });
-    images &&
-      product.images.forEach((image) =>
-        fs.unlink("./img/" + image, (err) => err && console.log(err))
-      );
-
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body);
     sendSucces(res, { product }, 200);
   } catch (error) {
-    images?.forEach((image) =>
-      fs.unlink("./img/" + image, (err) => err && console.log(err))
-    );
     sendError(res, error.message, 404);
   }
 };

@@ -6,20 +6,23 @@ const articleSchema = new mongoose.Schema({
     required: [true, "Article title is required"],
     unique: [true, "Article title must be unique"],
   },
-  bodyUz: {
-    type: String,
-    required: [true, "Article body is required"],
-  },
   titleRu: {
     type: String,
     required: [true, "Article title is required"],
     unique: [true, "Article title must be unique"],
   },
-  bodyRu: {
-    type: String,
+
+  body: {
+    type: [
+      {
+        descriptionUz: String,
+        descriptionRu: String,
+        image: String,
+      },
+    ],
     required: [true, "Article body is required"],
   },
-  image: {
+  mainImage: {
     type: String,
     required: [true, "Article image is required"],
   },

@@ -41,25 +41,16 @@ exports.deleteArticle = async (req, res) => {
 exports.createArticle = async (req, res) => {
   const image = req.file?.filename;
   try {
-    const article = await Article.create({
-      ...req.body,
-      ...(image ? { image } : {}),
-    });
+    const article = await Article.create(req.body);
 
     sendSucces(res, { article }, 200);
   } catch (error) {
-    image && fs.unlink("./img/" + image, (err) => err && console.log(err));
-
     sendError(res, error.message, 404);
   }
 };
 exports.editArticle = async (req, res) => {
-  const image = req.file?.filename;
   try {
-    const article = await Article.findByIdAndUpdate(req.params.id, {
-      ...req.body,
-      ...(image ? { image } : {}),
-    });
+    const article = await Article.findByIdAndUpdate(req.params.id, req.body);
 
     image &&
       fs.unlink("./img/" + article.image, (err) => err && console.log(err));
@@ -67,7 +58,6 @@ exports.editArticle = async (req, res) => {
     sendSucces(res, { article }, 200);
   } catch (error) {
     image && fs.unlink("./img/" + image, (err) => err && console.log(err));
-
     sendError(res, error.message, 404);
   }
 };

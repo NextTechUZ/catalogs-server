@@ -2,6 +2,7 @@ const Category = require("../models/categoryModel");
 const fs = require("fs");
 const APIFeatures = require("../utils/apiFeatures");
 const { sendError, sendSucces } = require("../utils/sendData");
+const Media = require("../models/mediaModel");
 
 exports.getAllCategories = async (req, res) => {
   try {
@@ -30,7 +31,10 @@ exports.getCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndDelete(req.params.id);
-    fs.unlink("./img/" + category.image, (err) => console.log(err));
+    const media = await Media.findByIdAndDelete(category.image);
+
+    console.log(media);
+    fs.unlink("./img/" + media.name, (err) => console.log(err));
 
     sendSucces(res, { category }, 204);
   } catch (error) {
@@ -40,30 +44,18 @@ exports.deleteCategory = async (req, res) => {
 
 exports.createCategory = async (req, res) => {
   try {
-    const image = req.file ? req.file.filename : undefined;
-    const category = await Category.create({ ...req.body, image });
+    const category = await Category.create(req.body);
     sendSucces(res, { category }, 200);
   } catch (error) {
-    req.file &&
-      fs.unlink("./img/" + req.file.filename, (err) => console.log(err));
     sendError(res, error.message, 404);
   }
 };
 
 exports.editCategory = async (req, res) => {
   try {
-    const image = req.file ? req.file.filename : undefined;
-
-    const category = await Category.findByIdAndUpdate(req.params.id, {
-      name: req.body.name,
-      image,
-    });
-    image && fs.unlink("./img/" + category.image, (err) => console.log(err));
-
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body);
     sendSucces(res, { category }, 200);
   } catch (error) {
-    req.file &&
-      fs.unlink("./img/" + req.file.filename, (err) => console.log(err));
     sendError(res, error.message, 404);
   }
 };

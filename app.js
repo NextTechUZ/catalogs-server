@@ -6,6 +6,7 @@ const articleRoutes = require("./routers/articleRouter");
 const categoryRoutes = require("./routers/categoryRouter");
 const productRoutes = require("./routers/productRouter");
 const swaggerRoutes = require("./routers/swaggerRoutes");
+const mediaRoutes = require("./routers/mediaRouter");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use("/api/v1/admins", adminRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/articles", articleRoutes);
+app.use("/api/v1/media", mediaRoutes);
 app.use("/", swaggerRoutes);
 
 module.exports = app;

@@ -1,7 +1,4 @@
 const express = require("express");
-const {} = require("../controllers/authController");
-const { uploadMulti } = require("../controllers/mediaController");
-// const { createProduct } = require("../controllers/productController");
 
 const {
   getAllProducts,
@@ -13,12 +10,12 @@ const {
 
 const productRoutes = express.Router();
 
-productRoutes.route("/").get(getAllProducts).post(uploadMulti, createProduct);
+productRoutes.route("/").get(getAllProducts).post(createProduct);
 
 productRoutes
   .route("/:id")
   .get(getProduct)
   .delete(deleteProduct)
-  .patch(uploadMulti, editProduct);
+  .patch(editProduct);
 
 module.exports = productRoutes;
