@@ -36,8 +36,7 @@ exports.deleteAdmin = async (req, res) => {
 };
 
 exports.createAdmin = async (req, res) => {
-  // console.log(req.file);
-  try {
+   try {
     const admin = await Admin.create(req.body);
     sendSucces(res, { admin }, 200);
   } catch (error) {

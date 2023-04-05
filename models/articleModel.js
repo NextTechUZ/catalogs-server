@@ -17,13 +17,17 @@ const articleSchema = new mongoose.Schema({
       {
         descriptionUz: String,
         descriptionRu: String,
-        image: String,
+        image: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Media",
+        },
       },
     ],
     required: [true, "Article body is required"],
   },
-  mainImage: {
-    type: String,
+  mainImage: { 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Media",
     required: [true, "Article image is required"],
   },
   created: {

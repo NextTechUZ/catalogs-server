@@ -1,8 +1,20 @@
 const { default: mongoose } = require("mongoose");
 
 const productSchema = new mongoose.Schema({
-  images: { type: [String], required: [true, "Image is required"] },
-  category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+  images: {
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Media",
+      },
+    ],
+    required: [true, "Image is required"],
+  },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    required: [true, "Category is required"],
+  },
   aboutUz: [
     {
       variable: String,

@@ -51,13 +51,9 @@ exports.createArticle = async (req, res) => {
 exports.editArticle = async (req, res) => {
   try {
     const article = await Article.findByIdAndUpdate(req.params.id, req.body);
-
-    image &&
-      fs.unlink("./img/" + article.image, (err) => err && console.log(err));
-
+ 
     sendSucces(res, { article }, 200);
   } catch (error) {
-    image && fs.unlink("./img/" + image, (err) => err && console.log(err));
-    sendError(res, error.message, 404);
+     sendError(res, error.message, 404);
   }
 };
