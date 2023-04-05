@@ -39,6 +39,11 @@ const productSchema = new mongoose.Schema({
   },
   descriptionRu: String,
   descriptionUz: String,
+  
+  created: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 // const t = {
