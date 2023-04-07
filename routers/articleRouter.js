@@ -11,12 +11,15 @@ const { uploadMulti, uploadSingle } = require("../controllers/mediaController");
 
 const articleRoutes = express.Router();
 
-articleRoutes.route("/").get(getAllArticles).post(createArticle);
+articleRoutes
+  .route("/")
+  .get(getAllArticles)
+  .post(routeProtector, createArticle);
 
 articleRoutes
   .route("/:id")
   .get(getArticle)
-  .delete(deleteArticle)
-  .patch(editArticle);
+  .delete(routeProtector, deleteArticle)
+  .patch(routeProtector, editArticle);
 
 module.exports = articleRoutes;

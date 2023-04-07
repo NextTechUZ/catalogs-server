@@ -1,5 +1,5 @@
 const express = require("express");
-const {} = require("../controllers/authController");
+const { routeProtector } = require("../controllers/authController");
 const {
   uploadMulti,
   getAllMedia,
@@ -12,12 +12,12 @@ const {
 
 const mediaRoutes = express.Router();
 
-mediaRoutes.route("/").get(getAllMedia).post(uploadMulti, createMedia);
+mediaRoutes.route("/").get(getAllMedia).post(routeProtector,uploadMulti, createMedia);
 
 mediaRoutes
   .route("/:id")
   .get(getMedia)
-  .patch(uploadSingle, editMedia)
-  .delete(deleteMedia);
+  .patch(routeProtector,uploadSingle, editMedia)
+  .delete(routeProtector,deleteMedia);
 
 module.exports = mediaRoutes;
