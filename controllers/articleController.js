@@ -5,7 +5,20 @@ const Article = require("../models/articleModel");
 
 exports.getAllArticles = async (req, res) => {
   try {
-    const articlesQuery = new APIFeatures(Article.find(), req.query)
+    const articlesQuery = new APIFeatures(
+      Article.find().populate([
+        {
+          path: "body.image",
+          select: "name",
+        },
+        {
+          path: "mainImage",
+          select: "name",
+        },
+      ]),
+      req.query
+    )
+
       .sort()
       .filter()
       .paginate()
@@ -19,7 +32,16 @@ exports.getAllArticles = async (req, res) => {
 
 exports.getArticle = async (req, res) => {
   try {
-    const article = await Article.findById(req.params.id);
+    const article = await Article.findById(req.params.id).populate([
+      {
+        path: "body.image",
+        select: "name",
+      },
+      {
+        path: "mainImage",
+        select: "name",
+      },
+    ]);
 
     sendSucces(res, { article }, 200);
   } catch (error) {
@@ -51,9 +73,9 @@ exports.createArticle = async (req, res) => {
 exports.editArticle = async (req, res) => {
   try {
     const article = await Article.findByIdAndUpdate(req.params.id, req.body);
- 
+
     sendSucces(res, { article }, 200);
   } catch (error) {
-     sendError(res, error.message, 404);
+    sendError(res, error.message, 404);
   }
 };

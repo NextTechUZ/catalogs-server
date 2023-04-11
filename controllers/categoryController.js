@@ -6,7 +6,13 @@ const Media = require("../models/mediaModel");
 
 exports.getAllCategories = async (req, res) => {
   try {
-    const categoryQuery = new APIFeatures(Category.find(), req.query)
+    const categoryQuery = new APIFeatures(
+      Category.find().populate({
+        path: "image",
+        select: "name",
+      }),
+      req.query
+    )
       .sort()
       .filter()
       .paginate()
@@ -20,7 +26,10 @@ exports.getAllCategories = async (req, res) => {
 
 exports.getCategory = async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await Category.findById(req.params.id).populate({
+      path: "image",
+      select: "name",
+    });
 
     sendSucces(res, { category }, 200);
   } catch (error) {
@@ -31,10 +40,10 @@ exports.getCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const category = await Category.findByIdAndDelete(req.params.id);
+    console.log(category.image);
     const media = await Media.findByIdAndDelete(category.image);
 
-    console.log(media);
-    fs.unlink("./img/" + media.name, (err) => console.log(err));
+    fs.unlink("./img/" + media?.name, (err) => console.log(err));
 
     sendSucces(res, { category }, 204);
   } catch (error) {

@@ -5,7 +5,19 @@ const Product = require("../models/productModel");
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const productsQuery = new APIFeatures(Product.find(), req.query)
+    const productsQuery = new APIFeatures(
+      Product.find().populate([
+        {
+          path: "images",
+          select: "name",
+        },
+        {
+          path: "category",
+          select: ["nameUz", "nameRu"],
+        },
+      ]),
+      req.query
+    )
       .sort()
       .filter()
       .paginate()
@@ -21,7 +33,10 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate({
+      path: "images",
+      select: "name",
+    });
 
     sendSucces(res, { product }, 200);
   } catch (error) {
