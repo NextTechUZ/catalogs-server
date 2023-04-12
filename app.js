@@ -15,12 +15,15 @@ app.use(cors());
 app.use(express.static("."));
 app.use(morgan("dev"));
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
+
 app.use("/api/v1/admins", adminRoutes);
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/articles", articleRoutes);
 app.use("/api/v1/media", mediaRoutes);
-app.use("/", swaggerRoutes);
 
 module.exports = app;
 
@@ -30,4 +33,3 @@ module.exports = app;
 
 // JWT_SECRET = thiswisjwtsecret
 // JWT_EXPIRES = 90d
- 
