@@ -77,25 +77,10 @@ exports.createMedia = async (req, res) => {
     const media = await Media.insertMany(medias);
     sendSucces(res, { media }, 200);
   } catch (error) {
-    req.file &&
-      fs.unlink("./img/" + req.file.filename, (err) => console.log(err));
     sendError(res, error.message, 404);
   }
 };
 
 exports.editMedia = async (req, res) => {
-  try {
-    const imageName = req.file && req.file.filename;
-    const media = await Media.findByIdAndUpdate(req.params.id, {
-      name: imageName,
-    });
-
-    imageName && fs.unlink("./img/" + media.name, (err) => console.log(err));
-
-    sendSucces(res, { media }, 200);
-  } catch (error) {
-    req.file &&
-      fs.unlink("./img/" + req.file.filename, (err) => console.log(err));
-    sendError(res, error.message, 404);
-  }
+  sendSucces(res, { data: "Cannot update media" }, 200);
 };

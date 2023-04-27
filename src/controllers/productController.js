@@ -1,5 +1,4 @@
 const APIFeatures = require("../utils/apiFeatures");
-const fs = require("fs");
 const { sendError, sendSucces } = require("../utils/sendData");
 const Product = require("../models/productModel");
 

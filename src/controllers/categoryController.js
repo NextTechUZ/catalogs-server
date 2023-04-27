@@ -1,5 +1,4 @@
 const Category = require("../models/categoryModel");
-const fs = require("fs");
 const APIFeatures = require("../utils/apiFeatures");
 const { sendError, sendSucces } = require("../utils/sendData");
 const Media = require("../models/mediaModel");
@@ -42,8 +41,6 @@ exports.deleteCategory = async (req, res) => {
     const category = await Category.findByIdAndDelete(req.params.id);
     console.log(category.image);
     const media = await Media.findByIdAndDelete(category.image);
-
-    fs.unlink("./img/" + media?.name, (err) => console.log(err));
 
     sendSucces(res, { category }, 204);
   } catch (error) {

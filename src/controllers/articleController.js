@@ -52,7 +52,6 @@ exports.getArticle = async (req, res) => {
 exports.deleteArticle = async (req, res) => {
   try {
     const article = await Article.findByIdAndDelete(req.params.id);
-    fs.unlink("./img/" + article.image, (err) => err && console.log(err));
 
     sendSucces(res, { article }, 204);
   } catch (error) {
@@ -61,7 +60,6 @@ exports.deleteArticle = async (req, res) => {
 };
 
 exports.createArticle = async (req, res) => {
-  const image = req.file?.filename;
   try {
     const article = await Article.create(req.body);
 
