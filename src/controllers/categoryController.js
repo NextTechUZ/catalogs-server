@@ -8,7 +8,7 @@ exports.getAllCategories = async (req, res) => {
     const categoryQuery = new APIFeatures(
       Category.find().populate({
         path: "image",
-        select: "name",
+        select: ["name", "location"],
       }),
       req.query
     )
