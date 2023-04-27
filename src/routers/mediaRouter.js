@@ -12,12 +12,12 @@ const {
 
 const mediaRoutes = express.Router();
 
-mediaRoutes.route("/").get(getAllMedia).post(routeProtector,uploadMulti, createMedia);
+mediaRoutes.route("/").get(getAllMedia).post(uploadMulti, createMedia);
 
 mediaRoutes
   .route("/:id")
   .get(getMedia)
-  .patch(routeProtector,uploadSingle, editMedia)
-  .delete(routeProtector,deleteMedia);
+  .patch(uploadSingle, editMedia)
+  .delete(deleteMedia);
 
 module.exports = mediaRoutes;

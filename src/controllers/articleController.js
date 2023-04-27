@@ -9,11 +9,11 @@ exports.getAllArticles = async (req, res) => {
       Article.find().populate([
         {
           path: "body.image",
-          select: "name",
+          select: ["name", "location"],
         },
         {
           path: "mainImage",
-          select: "name",
+          select: ["name", "location"],
         },
       ]),
       req.query
@@ -35,11 +35,11 @@ exports.getArticle = async (req, res) => {
     const article = await Article.findById(req.params.id).populate([
       {
         path: "body.image",
-        select: "name",
+        select: ["name", "location"],
       },
       {
         path: "mainImage",
-        select: "name",
+        select: ["name", "location"],
       },
     ]);
 

@@ -3,22 +3,31 @@ const fs = require("fs");
 const APIFeatures = require("../utils/apiFeatures");
 const { sendError, sendSucces } = require("../utils/sendData");
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { deleteFile } = require("../utils/deleteFile");
+const { s3 } = require("../utils/s3");
 
-const multerStorage = multer.diskStorage({
-  destination: (req, res, cb) => {
-    cb(null, "img");
+const multerStorage = multerS3({
+  s3,
+  bucket: process.env.BUCKET_NAME,
+  acl: "public-read",
+  metadata: function (request, file, cb) {
+    cb(null, { fieldname: file.fieldname });
   },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `${Math.floor(Math.random() * 1000)}-${Date.now()}.${ext}`);
+  key: function (request, file, cb) {
+    console.log(file);
+    cb(
+      null,
+      `${Math.floor(Math.random() * 1000)}-${Date.now()}-${file.originalname}`
+    );
   },
 });
 
-const multerFilter = (req, file, cb) => {
-  cb(null, true);
-};
+// const multerFilter = (req, file, cb) => {
+//   cb(null, true);
+// };
 
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+const upload = multer({ storage: multerStorage });
 
 exports.uploadSingle = upload.single("media");
 exports.uploadMulti = upload.array("media");
@@ -49,10 +58,11 @@ exports.getMedia = async (req, res) => {
 
 exports.deleteMedia = async (req, res) => {
   try {
-    const media = await Media.findByIdAndDelete(req.params.id);
-    fs.unlink("./img/" + media.name, (err) => console.log(err));
+    const media = await Media.findById(req.params.id);
 
-    sendSucces(res, { media }, 204);
+    deleteFile(media.name);
+
+    sendSucces(res, {}, 204);
   } catch (error) {
     sendError(res, error.message, 404);
   }
@@ -60,8 +70,9 @@ exports.deleteMedia = async (req, res) => {
 
 exports.createMedia = async (req, res) => {
   try {
+    console.log(req.files);
     const medias = req.files.map((media) => {
-      return { name: media.filename };
+      return { name: media.key, location: media.location };
     });
     const media = await Media.insertMany(medias);
     sendSucces(res, { media }, 200);

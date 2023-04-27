@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
     }
     const admin = await Admin.findOne({ username }).select("+password");
 
-    if (!(await admin.comparePasswords(password))) {
+    if (!admin || !(await admin.comparePasswords(password))) {
       return sendError(res, "Wrong password or username", 404);
     }
 

@@ -28,7 +28,7 @@ exports.getCategory = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).populate({
       path: "image",
-      select: "name",
+      select: ["name", "location"],
     });
 
     sendSucces(res, { category }, 200);

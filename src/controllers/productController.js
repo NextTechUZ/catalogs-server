@@ -9,7 +9,7 @@ exports.getAllProducts = async (req, res) => {
       Product.find().populate([
         {
           path: "images",
-          select: "name",
+          select: ["name", "location"],
         },
         {
           path: "category",
@@ -35,7 +35,7 @@ exports.getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate({
       path: "images",
-      select: "name",
+      select: ["name", "location"],
     });
 
     sendSucces(res, { product }, 200);
