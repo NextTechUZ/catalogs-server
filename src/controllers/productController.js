@@ -12,7 +12,7 @@ exports.getAllProducts = async (req, res) => {
         },
         {
           path: "category",
-          select: ["nameUz", "nameRu"],
+          select: ["nameUz", "nameRu", "image"],
         },
       ]),
       req.query
@@ -32,10 +32,16 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate({
-      path: "images",
-      select: ["name", "location"],
-    });
+    const product = await Product.findById(req.params.id).populate([
+      {
+        path: "images",
+        select: ["name", "location"],
+      },
+      {
+        path: "category",
+        select: ["nameUz", "nameRu", "image"],
+      },
+    ]);
 
     sendSucces(res, { product }, 200);
   } catch (error) {
