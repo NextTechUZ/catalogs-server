@@ -58,7 +58,7 @@ exports.getMedia = async (req, res) => {
 
 exports.deleteMedia = async (req, res) => {
   try {
-    const media = await Media.findById(req.params.id);
+    const media = await Media.findByIdAndDelete(req.params.id);
 
     deleteFile(media.name);
 
