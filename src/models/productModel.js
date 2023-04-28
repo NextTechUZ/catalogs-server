@@ -39,22 +39,17 @@ const productSchema = new mongoose.Schema({
   },
   descriptionRu: String,
   descriptionUz: String,
-  
+
   created: {
     type: Date,
-    default: new Date(),
   },
 });
 
-// const t = {
-//   images: string[],
-//   titleRu: string,
-//   titleUz: string,
-//   descriptionRu: string,
-//   descriptionUz: string,
-//   aboutUz:string
-//   aboutRu:string
-// };
+productSchema.pre("save", function (next) {
+  const currentDate = new Date();
+  this.createdAt = currentDate;
+  next();
+});
 
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
