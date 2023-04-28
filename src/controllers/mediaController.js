@@ -77,6 +77,9 @@ exports.createMedia = async (req, res) => {
     const media = await Media.insertMany(medias);
     sendSucces(res, { media }, 200);
   } catch (error) {
+    req.files?.forEach((media) => {
+      deleteFile(media.key);
+    });
     sendError(res, error.message, 404);
   }
 };
