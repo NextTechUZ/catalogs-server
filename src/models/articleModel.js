@@ -25,16 +25,20 @@ const articleSchema = new mongoose.Schema({
     ],
     required: [true, "Article body is required"],
   },
-  mainImage: { 
+  mainImage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Media",
     required: [true, "Article image is required"],
   },
   created: {
     type: Date,
-    default: new Date(),
   },
 });
 
+productSchema.pre("save", function (next) {
+  const currentDate = new Date();
+  this.created = currentDate;
+  next();
+});
 const Article = mongoose.model("Article", articleSchema);
 module.exports = Article;
