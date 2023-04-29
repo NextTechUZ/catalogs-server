@@ -35,7 +35,7 @@ const articleSchema = new mongoose.Schema({
   },
 });
 
-productSchema.pre("save", function (next) {
+articleSchema.pre("save", function (next) {
   const currentDate = new Date();
   this.created = currentDate;
   next();
